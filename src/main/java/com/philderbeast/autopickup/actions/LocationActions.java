@@ -5,6 +5,7 @@ import com.philderbeast.autopickup.Config;
 import com.philderbeast.autopickup.util.Util;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -13,68 +14,58 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 //TODO: this class must Die!
-public class LocationActions
-{
-    public static final HashMap < Location, LocationActions> locations = new HashMap <> ();
-    private final Player p;
-    private final ItemStack itemStack;
+public class LocationActions {
+	public static final Map<Location, LocationActions> locations = new HashMap<>();
+	private final Player p;
+	private final ItemStack itemStack;
 
-    private LocationActions(Player p, ItemStack is)
-    {
-        this.p = p;
-        this.itemStack = is;
-    }
+	private LocationActions(Player p, ItemStack is) {
+		this.p = p;
+		this.itemStack = is;
+	}
 
-    public static void add(Location loc, Player p, ItemStack is)
-    {
-        final Location location = loc.getBlock().getLocation();
+	public static void add(Location loc, Player p, ItemStack is) {
+		final Location location = loc.getBlock().getLocation();
 
-        if (locations.containsKey(location))
-        {
-            locations.remove(location);
-        }
+		if (locations.containsKey(location)) {
+			locations.remove(location);
+		}
 
-        final LocationActions sl = new LocationActions(p, is);
-        locations.put(location, sl);
+		final LocationActions sl = new LocationActions(p, is);
+		locations.put(location, sl);
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("AutoPickup"), () -> {
-            if (locations.containsKey(location) && locations.get(location).equals(sl))
-            {
-                locations.remove(location);
-            }
-        }, 10L);
-    }
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("AutoPickup"), () -> {
+			if (locations.containsKey(location) && locations.get(location).equals(sl)) {
+				locations.remove(location);
+			}
+		}, 10L);
+	}
 
-    public static boolean doAutoActions(Item item, Location exactLoc)
-    {
-        Location loc = exactLoc.getBlock().getLocation();
+	public static boolean doAutoActions(Item item, Location exactLoc) {
+		Location loc = exactLoc.getBlock().getLocation();
 
-        if (item == null ||  ! locations.containsKey(loc))
-        {
-            return false;
-        }
+		if (item == null || !locations.containsKey(loc)) {
+			return false;
+		}
 
-        LocationActions sl = locations.get(loc);
+		LocationActions sl = locations.get(loc);
 
-        if (sl == null ||  ! sl.p.isValid())
-        {
-            return false;
-        }
+		if (sl == null || !sl.p.isValid()) {
+			return false;
+		}
 
-        ItemStack is = item.getItemStack();
+		ItemStack is = item.getItemStack();
 
-        if (Config.usingPrisonGems && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().contains("Gem"))
-        {
-            return false;
-        }
+		if (Config.usingPrisonGems && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().contains("Gem")) {
+			return false;
+		}
 
-        item = Util.doFortune(sl.p, item, sl.itemStack);
+		item = Util.doFortune(sl.p, item, sl.itemStack);
 
-        if (AutoPickupPlugin.autoPickup.contains(sl.p.getName()))
-        {
-            AutoPickup.pickup(sl.p, item.getItemStack());
-            return true;
-        }
-        return false;
-    }
+		if (AutoPickupPlugin.autoPickup.contains(sl.p.getName())) {
+			AutoPickup.pickup(sl.p, item.getItemStack()); //TODO: Issue #1 here
+			return true;
+		}
+		return false;
+	}
 }

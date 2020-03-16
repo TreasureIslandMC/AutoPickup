@@ -11,7 +11,6 @@ import org.bukkit.inventory.Recipe;
 
 import java.util.Iterator;
 
-@SuppressWarnings("ALL")
 public class AutoSmelt
 {
 

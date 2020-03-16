@@ -18,8 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class AutoPickup
-{
+public class AutoPickup {
     public static void pickup(Player player, ItemStack item)
     {
         ArrayList<ItemStack> items = new ArrayList<>();
@@ -63,10 +62,9 @@ public class AutoPickup
                 for (ItemStack is : remaining)
                 {
                     player.getWorld().dropItem(player.getLocation(), is);
-                    return;
+                    return; //TODO: Issue #1 here
                 }
             }
-            return;
         }
     }
 }

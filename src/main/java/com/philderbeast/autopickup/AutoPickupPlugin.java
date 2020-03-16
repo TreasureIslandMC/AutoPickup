@@ -10,70 +10,60 @@ import java.util.HashMap;
 import java.util.List;
 import java.io.File;
 
-import com.philderbeast.autopickup.listners.MainListener;
+import com.philderbeast.autopickup.listeners.MainListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 import org.bukkit.plugin.PluginDescriptionFile;
 
-public final class AutoPickupPlugin extends JavaPlugin
-{
+public final class AutoPickupPlugin extends JavaPlugin {
 
-    //TODO: move these
-    public static final List < String > autoSmelt = new ArrayList<>();
-    public static final List < String > autoPickup = new ArrayList<>();
-    public static final List < String > autoBlock = new ArrayList<>();
-    public static final List < String > fullNotify = new ArrayList<>();
-    public static final HashMap < String, Long > warnCooldown = new HashMap<>();
-    
-    public AutoPickupPlugin()
-    {
-        super();
-    }
+	//TODO: move these
+	public static final List<String> autoSmelt = new ArrayList<>();
+	public static final List<String> autoPickup = new ArrayList<>();
+	public static final List<String> autoBlock = new ArrayList<>();
+	public static final List<String> fullNotify = new ArrayList<>();
+	public static final HashMap<String, Long> warnCooldown = new HashMap<>();
 
-    protected AutoPickupPlugin(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file)
-    {
-        super(loader, description, dataFolder, file);
-    }
+	public AutoPickupPlugin() {
+		super();
+	}
 
-    @Override
-    public void onDisable()
-    {
-        Config.saveAll();
-    }
+	protected AutoPickupPlugin(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
+		super(loader, description, dataFolder, file);
+	}
 
-    @Override
-    public void onEnable()
-    {
-        Config.setConfigFolder(this.getDataFolder().getAbsolutePath());
-        Config.reloadConfigs();
+	@Override
+	public void onDisable() {
+		Config.saveAll();
+	}
 
-        getServer().getPluginManager().registerEvents(new MainListener(), this);
+	@Override
+	public void onEnable() {
+		Config.setConfigFolder(this.getDataFolder().getAbsolutePath());
+		Config.reloadConfigs();
 
-        this.getCommand("autopickup").setExecutor(new AutoPickup());
-        this.getCommand("autosmelt").setExecutor(new AutoSmeltCommand());
-        this.getCommand("autoblock").setExecutor(new AutoBlockCommand());
-        this.getCommand("fullnotify").setExecutor(new FullNotify());
+		getServer().getPluginManager().registerEvents(new MainListener(), this);
 
-        for (Player p:Bukkit.getOnlinePlayers())
-        {
-            if (p.hasPermission("autopickup.enabled"))
-            {
-                AutoPickupPlugin.autoPickup.add(p.getName());
-            }
-            if (p.hasPermission("autoblock.enabled"))
-            {
-                AutoPickupPlugin.autoBlock.add(p.getName());
-            }
-            if (p.hasPermission("autosmelt.enabled"))
-            {
-                AutoPickupPlugin.autoSmelt.add(p.getName());
-            }
-            if (p.hasPermission("fullnotify.enabled"))
-            {
-                AutoPickupPlugin.fullNotify.add(p.getName());
-            }
-        }
-    }
+		this.getCommand("autopickup").setExecutor(new AutoPickup());
+		this.getCommand("autosmelt").setExecutor(new AutoSmeltCommand());
+		this.getCommand("autoblock").setExecutor(new AutoBlockCommand());
+		this.getCommand("fullnotify").setExecutor(new FullNotify());
+
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			if (p.hasPermission("autopickup.enabled")) {
+				AutoPickupPlugin.autoPickup.add(p.getName());
+			}
+			if (p.hasPermission("autoblock.enabled")) {
+				AutoPickupPlugin.autoBlock.add(p.getName());
+			}
+			if (p.hasPermission("autosmelt.enabled")) {
+				AutoPickupPlugin.autoSmelt.add(p.getName());
+			}
+			if (p.hasPermission("fullnotify.enabled")) {
+				AutoPickupPlugin.fullNotify.add(p.getName());
+			}
+		}
+	}
 }

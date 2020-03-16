@@ -11,9 +11,7 @@ import com.philderbeast.autopickup.AutoPickupPlugin;
 import com.philderbeast.autopickup.Config;
 import com.philderbeast.autopickup.util.Util;
 
-@SuppressWarnings("ALL")
-public class Common
-{
+public class Common {
 
     public static void openGui(Player p)
     {

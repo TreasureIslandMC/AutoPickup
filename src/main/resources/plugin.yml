@@ -1,5 +1,5 @@
 name: AutoPickup
-version: {{version}}
+version: @version@
 api-version: 1.13
 main: com.philderbeast.autopickup.AutoPickupPlugin
 softdepend: [MythicDrops, MythicMobs, QuickSell, FortuneBlocks, AutoSell, StackableItems, PrisonGems, MyPet, TokenEnchant]
