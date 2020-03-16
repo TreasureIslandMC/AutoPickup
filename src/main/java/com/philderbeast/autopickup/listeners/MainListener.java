@@ -27,7 +27,7 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.philderbeast.autopickup.commands.Common;
+import com.philderbeast.autopickup.commands.old.CommonOld;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -85,7 +85,7 @@ public class MainListener implements Listener {
 						} else {
 							AutoPickupPlugin.autoPickup.add(p.getName());
 						}
-						Common.openGui(p);
+						CommonOld.openGui(p);
 					}
 				} else if (name.contains("AutoSmelt")) {
 					if (p.hasPermission("AutoSmelt.Toggle")) {
@@ -94,7 +94,7 @@ public class MainListener implements Listener {
 						} else {
 							AutoPickupPlugin.autoSmelt.add(p.getName());
 						}
-						Common.openGui(p);
+						CommonOld.openGui(p);
 					}
 				} else if (name.contains("AutoBlock")) {
 					if (p.hasPermission("AutoBlock.Toggle")) {
@@ -103,7 +103,7 @@ public class MainListener implements Listener {
 						} else {
 							AutoPickupPlugin.autoBlock.add(p.getName());
 						}
-						Common.openGui(p);
+						CommonOld.openGui(p);
 					}
 				} else if (name.contains("FullNotify")) {
 					if (p.hasPermission("FullNotify.Toggle")) {
@@ -112,7 +112,7 @@ public class MainListener implements Listener {
 						} else {
 							AutoPickupPlugin.fullNotify.add(p.getName());
 						}
-						Common.openGui(p);
+						CommonOld.openGui(p);
 					}
 				} else if (!name.contains("auto")) {
 					if (name.contains("Close")) {

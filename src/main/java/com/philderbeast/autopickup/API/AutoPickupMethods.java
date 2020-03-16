@@ -5,7 +5,7 @@ import com.philderbeast.autopickup.AutoPickupPlugin;
 import com.philderbeast.autopickup.actions.AutoPickup;
 import com.philderbeast.autopickup.util.AutoResult;
 import com.philderbeast.autopickup.actions.AutoSmelt;
-import com.philderbeast.autopickup.commands.Common;
+import com.philderbeast.autopickup.commands.old.CommonOld;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -14,7 +14,7 @@ public class AutoPickupMethods
 {
     public static void openGui(Player player)
     {
-        Common.openGui(player);
+        CommonOld.openGui(player);
     }
 
     public static void autoGive(Player player, ItemStack item)

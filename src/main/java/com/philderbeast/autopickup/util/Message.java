@@ -59,10 +59,11 @@ public enum Message
             return false; 
         }
         message = defaultMessage; 
-        Config.messageConfig.set(path, decolorize(defaultMessage));
+        Config.messageConfig.set(path, ChatColor.stripColor(defaultMessage));
         return true; 
     }
 
+    @Deprecated
     private static String decolorize(String msg)
     {
         if (msg == null)

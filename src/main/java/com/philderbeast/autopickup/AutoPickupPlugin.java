@@ -1,21 +1,20 @@
 package com.philderbeast.autopickup;
 
+import co.aikar.commands.BukkitCommandManager;
 import com.philderbeast.autopickup.commands.AutoBlockCommand;
-import com.philderbeast.autopickup.commands.AutoPickup;
+import com.philderbeast.autopickup.commands.AutoPickupCommand;
 import com.philderbeast.autopickup.commands.AutoSmeltCommand;
-import com.philderbeast.autopickup.commands.FullNotify;
+import com.philderbeast.autopickup.commands.FullNotifyCommand;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.io.File;
+import java.util.Map;
 
 import com.philderbeast.autopickup.listeners.MainListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.JavaPluginLoader;
-import org.bukkit.plugin.PluginDescriptionFile;
 
 public final class AutoPickupPlugin extends JavaPlugin {
 
@@ -24,15 +23,7 @@ public final class AutoPickupPlugin extends JavaPlugin {
 	public static final List<String> autoPickup = new ArrayList<>();
 	public static final List<String> autoBlock = new ArrayList<>();
 	public static final List<String> fullNotify = new ArrayList<>();
-	public static final HashMap<String, Long> warnCooldown = new HashMap<>();
-
-	public AutoPickupPlugin() {
-		super();
-	}
-
-	protected AutoPickupPlugin(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
-		super(loader, description, dataFolder, file);
-	}
+	public static final Map<String, Long> warnCooldown = new HashMap<>();
 
 	@Override
 	public void onDisable() {
@@ -45,11 +36,7 @@ public final class AutoPickupPlugin extends JavaPlugin {
 		Config.reloadConfigs();
 
 		getServer().getPluginManager().registerEvents(new MainListener(), this);
-
-		this.getCommand("autopickup").setExecutor(new AutoPickup());
-		this.getCommand("autosmelt").setExecutor(new AutoSmeltCommand());
-		this.getCommand("autoblock").setExecutor(new AutoBlockCommand());
-		this.getCommand("fullnotify").setExecutor(new FullNotify());
+		registerCommands();
 
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			if (p.hasPermission("autopickup.enabled")) {
@@ -65,5 +52,14 @@ public final class AutoPickupPlugin extends JavaPlugin {
 				AutoPickupPlugin.fullNotify.add(p.getName());
 			}
 		}
+	}
+
+
+	private void registerCommands(){
+		BukkitCommandManager commandManager = new BukkitCommandManager(this);
+		commandManager.registerCommand(new AutoBlockCommand(this));
+		commandManager.registerCommand(new AutoPickupCommand(this));
+		commandManager.registerCommand(new AutoSmeltCommand(this));
+		commandManager.registerCommand(new FullNotifyCommand(this));
 	}
 }

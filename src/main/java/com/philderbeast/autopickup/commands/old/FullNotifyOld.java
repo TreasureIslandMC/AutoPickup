@@ -1,4 +1,4 @@
-package com.philderbeast.autopickup.commands;
+package com.philderbeast.autopickup.commands.old;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -7,8 +7,8 @@ import org.bukkit.entity.Player;
 
 import com.philderbeast.autopickup.AutoPickupPlugin;
 import com.philderbeast.autopickup.util.Message;
-
-public class FullNotify implements CommandExecutor
+@Deprecated
+public class FullNotifyOld implements CommandExecutor
 {
 
     @Override
